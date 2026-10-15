@@ -1,0 +1,10 @@
+/work/
+/artifacts/
+__pycache__/
+.osc/
+*.pyc
+*.rpm
+*.tar.gz
+*.tar.xz
+*.tar.zst
+node_modules/

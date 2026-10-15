@@ -1,0 +1,64 @@
+# OBS home-project packaging of the RStudio payload compiled by build.sh.
+%global debug_package %{nil}
+# Preserve already packaged Electron binaries and native addons byte for byte.
+%define __spec_install_post /bin/true
+%define _build_id_links none
+%define _binary_payload w7T2.zstdio
+%define _source_payload w3T2.zstdio
+
+Name:           rstudio
+Version:        @VERSION@
+Release:        0
+Summary:        Integrated development environment for R
+License:        AGPL-3.0-only
+URL:            https://posit.co/products/open-source/rstudio/
+Source0:        rstudio-@VERSION@-@RELEASE@.x86_64.rpm
+Source1:        rstudio-@VERSION@-source.tar.gz
+Source2:        rstudio-build-recipe.tar.gz
+Source3:        build-provenance.txt
+Source4:        postinstall.sh
+Source5:        postuninstall.sh
+Source6:        rstudio.files
+Source7:        SHA256SUMS
+BuildRequires:  cpio
+BuildRequires:  coreutils
+BuildRequires:  rpm
+Requires:       R-base >= 3.6.0
+Requires:       libsqlite3-0
+Requires:       libxkbcommon-x11-0
+ExclusiveArch:  x86_64
+
+%description
+RStudio Desktop is an integrated development environment for R.
+This home-project package reuses the payload compiled from the pinned RStudio
+source by the accompanying Docker recipe. OBS rebuilds the RPM packaging offline;
+it does not compile RStudio. The upstream source and original compilation recipe
+are included among the source RPM inputs.
+
+%prep
+%setup -q -c -T
+cd %{_sourcedir}
+sha256sum --check %{SOURCE7}
+
+%build
+# Compilation and clean-container validation precede source preparation.
+
+%install
+set -o pipefail
+mkdir -p %{buildroot}
+cd %{buildroot}
+rpm2cpio %{SOURCE0} | cpio --extract --make-directories --preserve-modification-time \
+    --no-absolute-filenames --no-preserve-owner --quiet
+
+%check
+test -x %{buildroot}/usr/lib/rstudio/rstudio
+test -x %{buildroot}/usr/lib/rstudio/resources/app/bin/rsession
+test -f %{buildroot}/usr/share/applications/rstudio.desktop
+
+%post -f %{SOURCE4}
+
+%postun -f %{SOURCE5}
+
+%files -f %{SOURCE6}
+
+%changelog

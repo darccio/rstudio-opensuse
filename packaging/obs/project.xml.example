@@ -1,0 +1,19 @@
+<project name="home:YOUR_USERNAME:rstudio">
+  <title>RStudio Desktop for openSUSE Tumbleweed</title>
+  <description>Packages the RStudio payload compiled with rstudio-opensuse.</description>
+  <person userid="YOUR_USERNAME" role="maintainer"/>
+  <person userid="YOUR_USERNAME" role="bugowner"/>
+  <build>
+    <enable repository="openSUSE_Tumbleweed"/>
+  </build>
+  <publish>
+    <enable repository="openSUSE_Tumbleweed"/>
+  </publish>
+  <debuginfo>
+    <disable/>
+  </debuginfo>
+  <repository name="openSUSE_Tumbleweed">
+    <path project="openSUSE:Tumbleweed" repository="standard"/>
+    <arch>x86_64</arch>
+  </repository>
+</project>

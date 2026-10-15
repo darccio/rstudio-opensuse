@@ -1,0 +1,17 @@
+**
+!Containerfile
+!build.sh
+!Makefile
+!README.md
+!.dockerignore
+!release.env
+!scripts/
+!scripts/**
+!packaging/
+!packaging/**
+!tests/
+!tests/*.py
+!docs/
+!docs/**
+**/__pycache__
+**/*.pyc

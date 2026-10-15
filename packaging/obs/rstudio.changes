@@ -1,0 +1,7 @@
+-------------------------------------------------------------------
+Thu Oct 15 20:00:00 UTC 2026 - Dario Castañé <cc@dario.cat>
+
+- Add an offline OBS home-project packaging route for the payload built
+  from pinned upstream source with the existing Docker recipe.
+- Carry the original source, compilation recipe, and provenance in the
+  source package; preserve upstream launchers and native binaries.
