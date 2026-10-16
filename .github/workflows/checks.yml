@@ -26,7 +26,7 @@ jobs:
           zypper --non-interactive refresh
           zypper --non-interactive install --no-recommends \
             ca-certificates git make gcc gcc-c++ cmake ninja rpm-build cpio tar gzip \
-            /usr/bin/python3 /usr/bin/node /usr/bin/npm /usr/bin/reuse
+            /usr/bin/python3 /usr/bin/node npm24 reuse
       - name: Check out sources
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:

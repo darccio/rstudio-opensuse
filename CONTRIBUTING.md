@@ -13,7 +13,7 @@ On Tumbleweed, the recipe tests and license check need:
 
 ```bash
 sudo zypper install make gcc gcc-c++ cmake ninja rpm-build cpio tar gzip \
-  /usr/bin/python3 /usr/bin/node /usr/bin/npm /usr/bin/reuse
+  /usr/bin/python3 /usr/bin/node npm24 reuse
 make check
 ```
 

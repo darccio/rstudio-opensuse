@@ -6,6 +6,8 @@ has [upstream release notes](https://docs.posit.co/ide/news/).
 
 ## Unreleased
 
+- Install Tumbleweed's `npm24` and `reuse` packages for CI and contributor checks.
+- Locate RPM-packaged GYP behind Tumbleweed's npm wrapper so its fixture runs in CI.
 - Prepare the recipe for public collaboration: MIT licensing and REUSE metadata,
   contribution/security guidance, maintainership, issue templates, and CI.
 - Document the current OBS home-project scope and work toward distribution review.

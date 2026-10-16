@@ -190,6 +190,13 @@ class UpstreamBuildTests(unittest.TestCase):
                 root = Path(executable).resolve().parents[1]
                 candidates.extend([root / 'gyp/gyp_main.py',
                                    root / 'node_modules/node-gyp/gyp/gyp_main.py'])
+        # Tumbleweed's unversioned npm command is a libalternatives wrapper.
+        # Query its package provider to find the bundled GYP without a versioned path.
+        if shutil.which('rpm'):
+            package_files = run('rpm', '-ql', '--whatprovides', 'npm')
+            if package_files.returncode == 0:
+                candidates.extend(Path(path) for path in package_files.stdout.splitlines()
+                                  if path.endswith('/node-gyp/gyp/gyp_main.py'))
         gyp_main = next((path for path in candidates if path.is_file()), None)
         if not gyp_main or not all(shutil.which(tool) for tool in ('make', 'gcc', 'g++')):
             self.skipTest('node-gyp, Make, GCC and G++ required')
