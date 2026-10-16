@@ -29,7 +29,7 @@ For the already compiled and verified recovered package:
 
 ```bash
 export CONTAINER_ENGINE=docker
-make validate RPM=artifacts/repacked/rstudio-2026.09.0+174-1.tw.x86_64.rpm
+make validate RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
 ```
 
 Host tools for source preparation are Bash, Python 3, RPM, and `rpmspec` (from
@@ -50,7 +50,7 @@ From the repository root, choose a fresh directory and prepare a verified RPM:
 
 ```bash
 export OBS_DIR="$PWD/work/obs"
-make obs-prepare RPM=artifacts/repacked/rstudio-2026.09.0+174-1.tw.x86_64.rpm
+make obs-prepare RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
 ```
 
 For a new build, use `RPM="$RSTUDIO_RPM"` from the README workflow instead.

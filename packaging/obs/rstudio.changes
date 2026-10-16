@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct 16 07:24:18 UTC 2026 - Dario Castañé <cc@dario.cat>
+
+- Update the upstream source pin to RStudio 2026.10.0+233, commit
+  e961c6137d92315437caf5af53959f7110b517f9.
+
+-------------------------------------------------------------------
 Thu Oct 15 20:00:00 UTC 2026 - Dario Castañé <cc@dario.cat>
 
 - Add an offline OBS home-project packaging route for the payload built

@@ -1,12 +1,13 @@
 # RStudio Desktop for openSUSE Tumbleweed
 
 Build RStudio Desktop from the upstream source tree and produce an x86_64 RPM.
-The recipe targets tag [`v2026.09.0+174`](https://github.com/rstudio/rstudio/releases/tag/v2026.09.0%2B174),
-commit `870df5ed7859c758db7aed6f510a3edca3c74bd7`.
+The recipe targets [RStudio 2026.10.0+233](https://dailies.rstudio.com/version/2026.10.0%2B233/),
+tag `v2026.10.0+233`, commit `e961c6137d92315437caf5af53959f7110b517f9`.
 
-**Status: RStudio compilation, RPM generation, and clean-container installation
-checks passed; GUI testing is pending.** The verifier checked the postinstall
-launcher and 26 dynamically linked ELF files for unresolved libraries.
+**Status: 2026.10.0+233 compilation, RPM generation, and metadata checks passed.**
+The recovered RPM contains 33 ELF files, all x86_64. Clean-container installation
+passed, including library checks for 26 dynamic ELF files. GUI testing remains
+manual. A clean OBS build and remote publication have not been validated.
 
 The release pins live in [`release.env`](release.env). This repository supports
 local builds and installation, plus [publishing through Open Build Service
@@ -82,7 +83,7 @@ Without `RPM=`, `make validate` requires exactly one RPM directly in
 `OUTPUT_DIR`. For the previously recovered build, use:
 
 ```bash
-make validate RPM=artifacts/repacked/rstudio-2026.09.0+174-1.tw.x86_64.rpm
+make validate RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
 ```
 
 For a metadata-only check, use `./build.sh check "$RSTUDIO_RPM"`.
@@ -109,7 +110,7 @@ application menu. Launch it as your regular user.
 For the recovered package, the host installation command is:
 
 ```bash
-sudo zypper install --allow-unsigned-rpm ./artifacts/repacked/rstudio-2026.09.0+174-1.tw.x86_64.rpm
+sudo zypper install --allow-unsigned-rpm ./artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
 ```
 
 `make validate` and `./build.sh verify` install into temporary containers that
@@ -166,7 +167,7 @@ and submodules, runs the release's dependency installer, and compiles RStudio as
 an unprivileged user with the upstream `make-package Electron RPM` script.
 CPack then generates the RPM using the settings in `packaging/tumbleweed.cmake`.
 This follows [upstream's build instructions](https://github.com/rstudio/rstudio/blob/main/INSTALL)
-and its [Linux packaging script](https://github.com/rstudio/rstudio/blob/v2026.09.0%2B174/package/linux/make-package).
+and its [Linux packaging script](https://github.com/rstudio/rstudio/blob/v2026.10.0%2B233/package/linux/make-package).
 
 The release's SUSE installer requests `libpq-devel`, `libsqlite-devel`, and
 `mesa-devel`. A temporary copy translates those names to Tumbleweed's
@@ -205,7 +206,7 @@ CMake 4's removed pre-3.5 compatibility is handled with
 The output directory contains the binary RPM, source archive (including tracked
 submodule files), build recipe, license/notice, package inventories, logs,
 provenance, and `SHA256SUMS`. The default RPM name is
-`rstudio-2026.09.0+174-1.tw.x86_64.rpm`.
+`rstudio-2026.10.0+233-1.tw.x86_64.rpm`.
 
 Keep the RPM with its source archive, compilation recipe, notices, and
 provenance when redistributing it. Logs are preserved on failure. To repeat a
@@ -218,7 +219,7 @@ the old verification marker once the verifier reaches the package-check step.
 
 | Variable | Meaning |
 | --- | --- |
-| `RSTUDIO_TAG` | Upstream release tag, such as `v2026.09.0+174`. |
+| `RSTUDIO_TAG` | Upstream release tag, such as `v2026.10.0+233`. |
 | `RSTUDIO_COMMIT` | Full 40-character commit hash to which that tag resolves. |
 | `RPM_RELEASE` | Local packaging revision: start at `1.tw` for a new upstream version; increment it for packaging-only rebuilds. |
 
