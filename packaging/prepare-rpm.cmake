@@ -10,6 +10,7 @@ foreach(relative IN ITEMS
     compiled/linux/arm64
     bin/linux/arm64
     node_modules/@github/copilot-linux-arm64
+    node_modules/@github/copilot-sdk-linux-arm64
     node_modules/@microsoft/mxc-sdk/bin/arm64)
   if(EXISTS "${copilot}/${relative}")
     message(STATUS "Omitting Copilot ARM64 tools: ${relative}")

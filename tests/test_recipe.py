@@ -303,10 +303,12 @@ foreach(relative IN ITEMS compiled/linux bin/linux
       DESTINATION "${copilot}/${relative}/${arch}" RENAME bundled-tool.node)
   endforeach()
 endforeach()
-foreach(arch IN ITEMS arm64 x64)
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rstudio"
-    DESTINATION "${copilot}/node_modules/@github/copilot-linux-${arch}"
-    RENAME bundled-tool.node)
+foreach(package IN ITEMS copilot copilot-sdk)
+  foreach(arch IN ITEMS arm64 x64)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/rstudio"
+      DESTINATION "${copilot}/node_modules/@github/${package}-linux-${arch}"
+      RENAME bundled-tool.node)
+  endforeach()
 endforeach()
 set(CPACK_PACKAGE_NAME rstudio)
 set(CPACK_PACKAGE_VERSION @RSTUDIO_VERSION@)
@@ -339,7 +341,7 @@ include(CPack)
             self.assertNotIn('/usr/bin/rstudio', files.stdout.splitlines())
             self.assertNotIn('arm64', files.stdout)
             self.assertEqual(sum(path.endswith('/bundled-tool.node')
-                                 for path in files.stdout.splitlines()), 4)
+                                 for path in files.stdout.splitlines()), 5)
             scripts = run('rpm', '-qp', '--qf', '%{POSTIN}', str(packages[0]))
             self.assertIn('ln -f -s /usr/lib/rstudio/rstudio /usr/bin/rstudio', scripts.stdout)
             self.check_obs_repack(directory, packages[0], version, rpm_release)
