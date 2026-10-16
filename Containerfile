@@ -17,7 +17,9 @@ COPY scripts/install-system-dependencies.sh /recipe/scripts/
 RUN bash /recipe/scripts/install-system-dependencies.sh
 COPY scripts/install-dependencies.sh scripts/run-upstream-dependencies.sh /recipe/scripts/
 RUN JOBS="$JOBS" bash /recipe/scripts/install-dependencies.sh /opt/rstudio-source --upstream-only
-COPY build.sh Makefile Containerfile README.md /recipe/
+COPY build.sh Makefile Containerfile README.md LICENSE REUSE.toml /recipe/
+COPY CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md MAINTAINERS.md CHANGELOG.md /recipe/
+COPY LICENSES/ /recipe/LICENSES/
 COPY .dockerignore /recipe/.dockerignore
 COPY scripts/ /recipe/scripts/
 COPY packaging/ /recipe/packaging/

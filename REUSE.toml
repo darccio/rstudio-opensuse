@@ -1,0 +1,11 @@
+version = 1
+
+[[annotations]]
+path = [
+  ".dockerignore", ".editorconfig", ".gitattributes", ".gitignore", ".github/**",
+  "Containerfile", "Makefile", "LICENSE", "release.env", "build.sh", "*.md",
+  "docs/**", "packaging/**", "scripts/**", "tests/*.py",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Dario Castañé <cc@dario.cat>"
+SPDX-License-Identifier = "MIT"

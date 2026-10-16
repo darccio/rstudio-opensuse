@@ -49,7 +49,9 @@ git ls-files --recurse-submodules -z | \
         --mtime="@$SOURCE_DATE_EPOCH" --owner=0 --group=0 --numeric-owner \
         -czf "$output/rstudio-$RSTUDIO_VERSION-source.tar.gz"
 tar -C "$RECIPE_DIR" --exclude=__pycache__ -czf "$output/build-recipe.tar.gz" \
-    release.env Containerfile .dockerignore build.sh Makefile README.md scripts packaging tests docs
+    release.env Containerfile .dockerignore build.sh Makefile README.md \
+    LICENSE LICENSES REUSE.toml CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md \
+    MAINTAINERS.md CHANGELOG.md scripts packaging tests docs
 
 cd "$source_dir/package/linux"
 python3 "$RECIPE_DIR/scripts/run-upstream-build.py" "$source_dir"

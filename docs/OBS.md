@@ -19,17 +19,20 @@ local `Source` files, checks their hashes, extracts the compiled RPM payload,
 and lets RPM regenerate dependency metadata. The package retains the original
 file attributes and install/uninstall scripts. This is a home-project binary
 repackaging route, not a Factory submission or an OBS source-compilation recipe.
+See the [packaging policy](PACKAGING.md) for `spec-cleaner`, `rpmlint`, and the
+changes needed before distribution review, and [licensing](LICENSING.md) for
+the distinction between recipe and payload licenses.
 
 ## 1. Build and validate locally
 
 Follow the [README workflow](../README.md#build-validate-and-install). The RPM
 must have a current `*.rpm.VERIFIED` marker from clean-container validation.
 
-For the already compiled and verified recovered package:
+Use the release variables and RPM path from that workflow:
 
 ```bash
 export CONTAINER_ENGINE=docker
-make validate RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
+make validate RPM="$RSTUDIO_RPM"
 ```
 
 Host tools for source preparation are Bash, Python 3, RPM, and `rpmspec` (from
@@ -49,11 +52,10 @@ Keep credentials in the client configuration, outside Git.
 From the repository root, choose a fresh directory and prepare a verified RPM:
 
 ```bash
-export OBS_DIR="$PWD/work/obs"
-make obs-prepare RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
+export OBS_DIR="$WORK_DIR/obs"
+make obs-prepare RPM="$RSTUDIO_RPM"
 ```
 
-For a new build, use `RPM="$RSTUDIO_RPM"` from the README workflow instead.
 Without `RPM=`, the preparer requires one RPM directly in `OUTPUT_DIR`. It
 checks the local package identity, verification marker, source archive, and
 recorded release/commit before preparing inputs. An existing `OBS_DIR` is

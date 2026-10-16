@@ -10,13 +10,18 @@ OBS_DIR ?= $(WORK_DIR)/obs
 export JOBS WORK_DIR OUTPUT_DIR RPM
 export OBS_DIR
 
-.PHONY: build validate test clean help obs-prepare obs-build obs-validate
+.PHONY: build validate test lint check clean help obs-prepare obs-build obs-validate
 
 build:
 	./build.sh build
 
 test:
 	./build.sh test
+
+lint:
+	reuse lint
+
+check: lint test
 
 obs-prepare:
 	./build.sh obs-prepare
@@ -61,6 +66,8 @@ help:
 		'make build                  Build and verify using build.sh (default).' \
 		'make validate [RPM=path]     Run tests and verify an existing RPM in a clean container.' \
 		'make test                   Run offline recipe tests.' \
+		'make lint                   Check repository licensing with REUSE.' \
+		'make check                  Run licensing checks and offline recipe tests.' \
 		'make obs-prepare            Prepare offline OBS inputs from a verified RPM.' \
 		'make obs-build              Build prepared inputs with osc for Tumbleweed x86_64.' \
 		'make obs-validate RPM=path   Run tests and verify an OBS-produced RPM.' \

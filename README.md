@@ -14,6 +14,12 @@ local builds and installation, plus [publishing through Open Build Service
 (OBS)](docs/OBS.md). OBS packaging reuses the locally compiled payload; RStudio
 compilation continues to use the existing Docker/Podman workflow.
 
+This is an independent community project. The recipe and documentation are
+[MIT licensed](LICENSE); RStudio and bundled components retain their own
+[licenses](docs/LICENSING.md). See [contributing](CONTRIBUTING.md),
+[maintainers](MAINTAINERS.md), [security reporting](SECURITY.md), and the
+[packaging policy](docs/PACKAGING.md) for review and distribution conventions.
+
 ## Build, validate, and install
 
 Run the following commands from the repository root in the same Bash session.
@@ -80,11 +86,7 @@ make validate RPM="$RSTUDIO_RPM"
 ```
 
 Without `RPM=`, `make validate` requires exactly one RPM directly in
-`OUTPUT_DIR`. For the previously recovered build, use:
-
-```bash
-make validate RPM=artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
-```
+`OUTPUT_DIR`. The selected RPM must match the current pins in `release.env`.
 
 For a metadata-only check, use `./build.sh check "$RSTUDIO_RPM"`.
 
@@ -106,12 +108,6 @@ Zypper installs the runtime dependencies and runs the upstream postinstall
 script, which creates `/usr/bin/rstudio`. The desktop entry is installed at
 `/usr/share/applications/rstudio.desktop`; search for **RStudio** in your
 application menu. Launch it as your regular user.
-
-For the recovered package, the host installation command is:
-
-```bash
-sudo zypper install --allow-unsigned-rpm ./artifacts/repacked/rstudio-2026.10.0+233-1.tw.x86_64.rpm
-```
 
 `make validate` and `./build.sh verify` install into temporary containers that
 are removed afterward. Their success does not install an application on your
@@ -143,6 +139,8 @@ retained for future builds.
 | `make` or `make build` | Invoke `./build.sh build`, including container verification. |
 | `make validate` | Run recipe tests, then verify the single RPM directly in `OUTPUT_DIR` in a clean container. |
 | `make test` | Run the offline recipe tests through `./build.sh test`. |
+| `make lint` | Check source licensing with REUSE. |
+| `make check` | Run licensing checks and offline recipe tests. |
 | `make obs-prepare` | Prepare offline OBS inputs from a verified RPM. |
 | `make obs-build` | Build the prepared package with `osc` for Tumbleweed x86_64. |
 | `make obs-validate RPM=...` | Run tests and verify an OBS-produced RPM, allowing OBS release counters. |
@@ -188,8 +186,9 @@ The RPM requires R and uses openSUSE package names. Automatic ELF dependency
 discovery is enabled so missing runtime libraries are visible to the package
 manager. Upstream layout and install/uninstall scriptlets are retained. The
 postinstall script creates `/usr/bin/rstudio`; this launcher is checked after
-installation. Copilot's optional ARM64 Linux tools are omitted from the staged
-x86_64 package so they cannot add ARM64 runtime requirements. The result is a
+installation. Copilot's optional ARM64 Linux tools, including the
+`@github/copilot-sdk-linux-arm64` bundle, are omitted from the staged x86_64
+package so they cannot add ARM64 runtime requirements. The result is a
 local unsigned package, not an openSUSE Factory submission.
 
 After building, the driver installs the RPM into a separate clean Tumbleweed
@@ -205,7 +204,8 @@ CMake 4's removed pre-3.5 compatibility is handled with
 
 The output directory contains the binary RPM, source archive (including tracked
 submodule files), build recipe, license/notice, package inventories, logs,
-provenance, and `SHA256SUMS`. The default RPM name is
+provenance, and `SHA256SUMS`. The recipe archive includes this project's license
+and REUSE metadata. The default RPM name is
 `rstudio-2026.10.0+233-1.tw.x86_64.rpm`.
 
 Keep the RPM with its source archive, compilation recipe, notices, and
@@ -290,3 +290,8 @@ compile RStudio. When node-gyp is available, they also reproduce the native
 addon copy failure with a small GYP fixture and check the corrected Make build.
 Fixtures are created in temporary directories and never installed. Python 3,
 CMake, Ninja, GCC, CPack and rpmbuild are needed.
+
+GitHub CI runs the recipe checks in Tumbleweed without publishing credentials.
+It does not run a full RStudio build or upload to OBS. Run `make check` for the
+same fixture and licensing checks locally; see [CONTRIBUTING.md](CONTRIBUTING.md)
+for dependencies and [CHANGELOG.md](CHANGELOG.md) for recipe changes.

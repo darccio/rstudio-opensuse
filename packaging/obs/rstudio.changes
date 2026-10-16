@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct 16 10:30:00 UTC 2026 - Dario Castañé <cc@dario.cat>
+
+- Add recipe licensing and contributor documentation for public use.
+- Include recipe license texts and REUSE metadata in build archives.
+
+-------------------------------------------------------------------
 Fri Oct 16 07:24:18 UTC 2026 - Dario Castañé <cc@dario.cat>
 
 - Update the upstream source pin to RStudio 2026.10.0+233, commit

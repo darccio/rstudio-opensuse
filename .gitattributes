@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.rpm binary
+*.tar.gz binary
+*.tar.xz binary
+*.tar.zst binary

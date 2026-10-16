@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Dario Castañé <cc@dario.cat>
+# SPDX-License-Identifier: MIT
+# Recipe license above; License: below describes the RStudio payload.
 # OBS home-project packaging of the RStudio payload compiled by build.sh.
 %global debug_package %{nil}
 # Preserve already packaged Electron binaries and native addons byte for byte.

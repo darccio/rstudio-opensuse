@@ -8,3 +8,11 @@ __pycache__/
 *.tar.xz
 *.tar.zst
 node_modules/
+.venv/
+.env
+.env.*
+!.env.example
+.oscrc
+/oscrc
+*.key
+*.pem
